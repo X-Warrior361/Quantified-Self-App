@@ -1,0 +1,48 @@
+body{
+    background-color: /*#990099*/#000000 ;
+    color: #f1e68b;
+}
+
+a{
+    text-decoration: none;
+    color: #f1e68b;
+}
+
+h1{
+    font: sans-serif;
+    font-size: 55px;
+    text-align: center;
+}
+
+h2{
+   font-family: 'Brush Script MT', cursive;
+   font-size: 55px;
+   text-align: center;
+}
+
+th{
+    font-size: 25px;
+    color: #f1e68b;
+}
+
+label:not(.nostyle){
+    text-align: right;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+
+.nostyle{
+     font-size: 20px;
+     font-weight: initial;
+}
+
+.marg{
+    margin-right: 100px;
+}
+
+#image{
+    max-width: 100%;
+    height: auto;
+    margin-left: 10px;
+}

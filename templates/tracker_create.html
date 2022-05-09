@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tracker</title>
+    <link href=" {{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href=" {{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
+</head>
+<body>
+<br>
+<h1>Add Tracker</h1>
+<br><br>
+<div class="row justify-content-center" style="max-width: 100%;">
+    <div class="col-auto" style="max-width: 100%;">
+        <form action="/tracker/{{user.id}}/create" method="post" id="form" style="margin-right: 75px;">
+            <label><b>Name:</b> </label>
+            <input type="text" name="name" required/>
+            {% if error %}
+            <br>
+            <div class="row justify-content-center" style="margin-top: 18px; margin-bottom: 10px; font-size:2px;">
+                <br><h5>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;{{error}}</h5>
+            </div>
+            {% else %}<br><br>
+            {% endif %}
+            <label><b>Description: </b></label>
+            <input type="text" name="description" required/>
+            <br><br>
+            <label><b>Type: </b></label>
+            <select name="type" id="type" onchange="showDiv(this)">
+                <option value="num" selected="selected">Numeric</option>
+                <option value="mcq">Multiple Choice</option>
+                <option value="time">Time Duration</option>
+                <option value="bool">Boolean</option>
+            </select>
+            <br><br>
+            <div id="options">
+                <label><b>Options:</b></label>
+                <input type="text" name="options" id="req"/>
+                <br><br>
+                <div class="row justify-content-center">
+                    <strong>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                        *Options should be separated by commas*</strong>
+                </div>
+                <br>
+            </div>
+            <div id="bool">
+                <label><b>Options:</b> </label>
+                <input type="text" name="bool_1" placeholder="First Value" id="imp1">
+                <input type="text" name="bool_2" placeholder="Second Value" id="imp2">
+                <br><br>
+            </div>
+            <br>
+            <div class="row justify-content-center">
+                <input class="btn btn-success" type="submit" value = "Submit">
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+window.onload = (event) => {
+    document.getElementById('options').style.display = "none";
+    document.getElementById('bool').style.display = "none";
+};
+
+function showDiv(select){
+   if(select.value=="mcq"){
+    document.getElementById('options').style.display = "block";
+    document.getElementById('req').required=true;
+    document.getElementById('bool').style.display = "none";
+    document.getElementById('imp1').required=false;
+    document.getElementById('imp2').required=false;
+    
+   } else if (select.value=="bool"){
+    document.getElementById('bool').style.display = "block";
+    document.getElementById('imp1').required=true;
+    document.getElementById('imp2').required=true;
+    document.getElementById('req').required=false;
+    document.getElementById('options').style.display = "none";
+   }
+   else{
+    document.getElementById('options').style.display = "none";
+    document.getElementById('bool').style.display = "none";
+    document.getElementById('req').required=false;
+    document.getElementById('imp1').required=false;
+    document.getElementById('imp2').required=false;
+   }
+}
+</script>
+</html>

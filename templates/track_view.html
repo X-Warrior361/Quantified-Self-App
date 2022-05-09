@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Logs</title>
+    <link href=" {{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href=" {{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
+</head>
+<body>
+<br>
+<h1>Hello, {{user.name}}</h1>
+<h1>{{tracker.name}}</h1>
+<br>
+<center><h3>{{tracker.description}}</h3></center>
+<div class="row justify-content-center" style="max-width: 100%;">
+    <div class="col-auto" style="max-width: 100%;">
+        <br>
+        {% if logs %}
+        <img src="" id="image">
+        <br><br>
+        <select class="nostyle" id="date" onchange="showDiv(this)">
+            <option value="all" selected="selected">All logs</option>
+            <option value="week">Last week</option>
+            <option value="month">Last month</option>
+            <option value="year">Last year</option>
+        </select>
+        <br><br><br>
+        <table class="table table-responsive">
+            <tr>
+                <th>Timestamp</th>
+                <th>Value</th>
+                <th>Notes</th>
+                <th>Logged</th>
+                <th></th>
+                <th></th>
+            </tr>
+            {% if not bool %}
+            {% for log, date in logs %}
+            <tr>
+                <td style="font-size: 20px;">{{log.time_stamp}}</td>
+                {% if log.value_num %}
+                <td style="font-size: 20px;">{{log.value_num}}</td>
+                {% endif %}
+                {% if log.value_mcq %}
+                <td style="font-size: 20px;">{{log.value_mcq}}</td>
+                {% endif %}
+                {% if log.value_time %}
+                <td style="font-size: 20px;">{{log.value_time}}</td>
+                {% endif %}
+                <td style="font-size: 20px;">{{log.note}}</td>
+                <td style="font-size: 20px;">{{date}}</td>
+                <td><a href="/log/{{log.id}}/update" class="btn btn-warning" role="button">Edit</a></td>
+                <td><a href="/log/{{log.id}}/delete" class="btn btn-danger" role="button">Delete</a></td>
+            </tr>
+            {% endfor %}
+            {% endif %}
+
+            {% if bool %}
+            {% for log, op, date in opt %}
+            <tr>
+                <td>{{log.time_stamp}}</td>
+                <td>{{op}}</td>
+                <td>{{log.note}}</td>
+                <td>{{date}}</td>
+                <td><a href="/log/{{log.id}}/update" class="btn btn-warning" >Edit</a></td>
+                <td><a href="/log/{{log.id}}/delete" class="btn btn-danger" >Delete</a></td>
+            </tr>
+            {% endfor%}
+            {% endif %}
+        </table>
+        <br>
+        {% else %}
+        <h2>No logs added</h2>
+        <br>
+        {% endif %}
+
+        <div class="row justify-content-center">
+            <div class="col-auto">
+                <a href="/dashboard/{{user.id}}" class="btn btn-warning" role="button" style="margin-right: 50px;">
+                    Go to Dashboard</a>
+                <a href="/log/{{user.id}}/{{tracker.id}}/track/add" class="btn btn-success" role="button">Add Log</a>
+            </div>
+        </div>
+        <br><br>
+    </div>
+</div>
+</body>
+
+<script type="text/javascript">
+    window.onload = (event) => {
+        document.getElementById('image').src="{{ url_for('static', filename='img/image.png') }}";
+    };
+    function showDiv(select){
+        if(select.value=="all"){
+            document.getElementById('image').src="{{ url_for('static', filename='img/image.png') }}";
+        }
+        else if(select.value=="week"){
+            document.getElementById('image').src="{{ url_for('static', filename='img/week.png') }}";
+        }
+        else if(select.value=="month"){
+            document.getElementById('image').src="{{ url_for('static', filename='img/month.png') }}";
+        }
+        else{
+            document.getElementById('image').src="{{ url_for('static', filename='img/year.png') }}";
+        }
+    }
+</script>
+</html>

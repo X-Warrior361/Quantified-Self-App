@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Update</title>
+    <link href=" {{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href=" {{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
+</head>
+<body>
+<br>
+<h1>Update Log</h1>
+<br>
+<div class="row justify-content-center" style="max-width: 100%;">
+    <div class="col-auto" style="max-width: 100%;">
+        <center><h3>{{tracker.name}}</h3>
+        <br>
+        {% if tracker.type == "num" %}
+        <h3>Type: Numeric</h3>
+        {% endif %}
+        {% if tracker.type == "mcq" %}
+        <h3>Type: Multiple Choice</h3>
+        {% endif %}
+        {% if tracker.type == "time" %}
+        <h3>Type: Time Duration</h3>
+        {% endif %}
+        {% if tracker.type == "bool" %}
+        <h3>Type: Boolean</h3>
+        {% endif %}</center>
+        <br><br>
+        <form action="/log/{{log.id}}/update" method="post" class="marg">
+            <label>When: </label>
+            <input type="datetime-local" name="when" value="{{stamp}}" required>
+            {% if error %}
+            <br>
+            <div class="row justify-content-center" style="margin-top: 18px; margin-bottom: 10px;">
+                <br><h5>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;{{error}}</h5>
+            </div>
+            {% else %}<br><br>
+            {% endif %}
+            <label>Note: </label>
+            <input type="text" name="notes" value="{{log.note}}">
+            <br><br>
+            {% if log.value_num %}
+            <label>Value: </label>
+            <input type="number" name="value" value="{{log.value_num}}" required>
+            {% endif %}
+
+            {% if log.value_mcq %}
+            <label>Value: </label>
+            {% for opt in options%}
+            <input type="radio" name="value" value="{{opt.id}}" required>
+            <label>{{opt.name}}</label>
+            {% endfor %}
+            {% endif %}
+
+            {% if log.value_time %}
+            <label>Value: </label>
+            <input type="number" min="0" name="hours" placeholder="Hours" value="{{time[0]}}" required>
+            <input type="number" min="0" max="59" name="minutes" placeholder="Min" value="{{time[1]}}" required>
+            <input type="number" min="0" max="59" name="seconds" placeholder="Sec" value="{{time[2]}}" required>
+            {% endif %}
+
+            {% if bool %}
+            <label>Value: </label>
+            <input type="radio" name="value" value="1" required>
+            <label>{{options[0].name}}</label>
+            <input type="radio" name="value" value="0">
+            <label>{{options[1].name}}</label>
+            {% endif %}
+            <br><br>
+            <div class="row justify-content-center">
+                <input class="btn btn-success" type="submit" value = "Submit" style="margin-top: 15px;">
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

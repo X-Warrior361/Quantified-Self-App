@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard</title>
+    <link href=" {{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href=" {{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
+</head>
+<body>
+<br>
+<h1>Welcome {{user.name}}</h1>
+<br>
+<h2>Trackers</h2>
+<br>
+{% if tracker %}
+<div class="row justify-content-center" style="max-width: 100%;">
+    <div class="col-auto" style="max-width: 100%;">
+        <div class="table-responsive-sm">
+      <table class="table">
+        <tr>
+            <th>Name</th>
+            <th>Last Logged</th>
+            <th>Value</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        {% for t, l, v in tracker %}
+        <tr style="border: none;">
+            <td style="font-size: 20px;">{{t.name}}</td>
+            <td style="color: #f1e68b; font-size: 20px;">{{l}}</td>
+            <td style="color: #f1e68b; font-size: 20px;">{{v}}</td>
+            <td><a href="/tracker/{{user.id}}/{{t.id}}/view" class="btn btn-primary" style="background-color: red" role="button">View</a></td>
+            <td><a href="/log/{{user.id}}/{{t.id}}/dash/add" class="btn btn-success" role="button">Add</a></td>
+            <td><a href="/tracker/{{t.id}}/update" class="btn btn-warning" role="button">Edit</a></td>
+            <td><a href="/tracker/{{t.id}}/delete" class="btn btn-danger" role="button">Delete</a></td>
+        </tr>
+        {% endfor %}
+      </table>
+        </div>
+    </div>
+</div>
+
+<br><br>
+{% endif %}
+
+<div class="row justify-content-center">
+    <div class="col-auto">
+        <a href="/tracker/{{user.id}}/create" class="btn btn-success" role="button" style="margin-right: 50px;">
+            Add Tracker</a>
+        <a href="/logout" class="btn btn-danger" role="button">Logout</a>
+    </div>
+</div>
+<br>
+<div class="row justify-content-center">
+    <div class="col-auto">
+        <a href="/edit/{{user.id}}" class="btn btn-warning" role="button" style="margin-right: 50px;
+        margin-left: 15px;">Update User</a>
+        <a href="/delete/{{user.id}}" class="btn btn-danger" role="button">Delete User</a>
+    </div>
+</div>
+</body>
+</html>

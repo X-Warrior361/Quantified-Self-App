@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Create</title>
+    <link href=" {{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href=" {{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
+</head>
+<body>
+<br>
+<h1>Add Log</h1>
+<br>
+<div class="row justify-content-center" style="max-width: 100%;">
+    <div class="col-auto" style="max-width: 100%;">
+        <center><h3>{{tracker.name}}</h3>
+        <br>
+        {% if type == "num" %}
+        <h3>Type: Numeric</h3>
+        {% endif %}
+        {% if type == "mcq" %}
+        <h3>Type: Multiple Choice</h3>
+        {% endif %}
+        {% if type == "time" %}
+        <h3>Type: Time Duration</h3>
+        {% endif %}
+        {% if type == "bool" %}
+        <h3>Type: Boolean</h3>
+        {% endif %}</center>
+        <br><br>
+        <form action="/log/{{user.id}}/{{tracker.id}}/{{prev}}/add" method="post" class="marg" >
+            <label>When: </label>
+            <input type="datetime-local" name="when" value="{{stamp}}" required>
+            {% if error %}
+            <br>
+            <div class="row justify-content-center" style="margin-top: 18px; margin-bottom: 10px; font-size:2px;">
+                <br><h5>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;{{error}}</h5>
+            </div>
+            {% else %}<br><br>
+            {% endif %}
+            <label>Note: </label>
+            <input type="text" name="notes">
+            <br><br>
+            {% if type == "num" %}
+            <label>Value</label>
+            <input type="number" step="0.01" name="value" min="0" required>
+            {% endif %}
+
+            {% if type == "mcq" %}
+            <label style="margin-right: 25px;">Value: </label>
+            {% for opt in options%}
+            <input class="nostyle" type="radio" name="value" value="{{opt.id}}" required>
+            <label class="nostyle">{{opt.name}}</label>
+            {% endfor %}
+            {% endif %}
+
+            {% if type == "time"  %}
+            <label>Value: </label>
+            <input type="number" min="0" name="hours" placeholder="Hours" size="2" required>
+            <input type="number" min="0" max="59" name="minutes" placeholder="Min" size="2" required>
+            <input type="number" min="0" max="59" name="seconds" placeholder="Sec" size="2" required>
+            {% endif %}
+
+            {% if type == "bool" %}
+            <label style="margin-right: 25px;">Value: </label>
+            <input class="nostyle" type="radio" name="value" value="1" required>
+            <label class="nostyle" >{{options[0].name}}</label>
+            <input class="nostyle" type="radio" name="value" value="0">
+            <label class="nostyle" >{{options[1].name}}</label>
+            {% endif %}
+            <br><br>
+            <div class="row justify-content-center">
+                <input class="btn btn-success" type="submit" value = "Submit" style="margin-top: 15px;">
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

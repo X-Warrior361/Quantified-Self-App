@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Update</title>
+    <link href=" {{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href=" {{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
+</head>
+<body>
+<br>
+<h1>Update User</h1>
+<br><br>
+<div class="row justify-content-center" style="max-width: 100%;">
+    <div class="col-auto" style="max-width: 100%;">
+        <form action="/edit/{{user.id}}" method="post" id="new user">
+            <label>Name: </label>
+            <input type="text" name="user" class="marg" value="{{user.name}}" required>
+            <br>
+            <div class="row justify-content-center" style="margin-bottom: 13px; margin-top: 17px; margin-left: 60px;">
+                {% if error %}<h4>{{error.message}}</h4>{% endif %}
+            </div>
+            <label>Password: </label>
+            <input type="password" name="password" class="marg" required>
+            <br><br>
+            <div class="row justify-content-center">
+                <input class="btn btn-success" type="submit" value = "Submit">
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Update</title>
+    <link href=" {{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href=" {{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
+</head>
+<body>
+<br>
+<h1>Update Tracker</h1>
+<br><br>
+<div class="row justify-content-center" style="max-width: 100%;">
+    <div class="col-auto" style="max-width: 100%;">
+        <form action="/tracker/{{tracker.id}}/update" method="post" id="update">
+            <label><b>Name: </b></label>
+            <input type="text" name="name" value="{{tracker.name}}" required>
+            {% if error %}
+            <br>
+            <div class="row justify-content-center" style="margin-top: 18px; margin-bottom: 10px; font-size:2px;">
+                <br><h5>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;{{error}}</h5>
+            </div>
+            {% else %}<br><br>
+            {% endif %}
+            <label><b>Description: </b> </label>
+            <input type="text" name="description" value="{{tracker.description}}" required>
+            <br><br>
+            {% if mcq %}
+            <label><b>Add more options: </b></label>
+            <input type="text" name="new"/>
+            <br><br>
+            <label><b>Change existing options: </b></label>
+            {% for o in options %}
+            <input type="text" name="{{o.id}}" value="{{o.name}}">
+            {% endfor %}
+            {% endif %}
+            {% if bool %}
+            <label><b>Change existing options: </b></label>
+            {% for o in options %}
+            <input type="text" name="{{o.id}}" value="{{o.name}}">
+            {% endfor %}
+            <br><br>
+            <br>
+            {% endif %}
+            <div class="row justify-content-center">
+                <input class="btn btn-success" type="submit" value = "Submit">
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

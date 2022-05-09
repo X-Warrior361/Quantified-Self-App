@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Home</title>
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
+</head>
+<body>
+<br>
+<h1>Login</h1>
+<br><br>
+<div class="row justify-content-center" style="max-width: 100%;">
+    <div class="col-auto" style="max-width: 100%;">
+        <form action="/login" method="post" id="login">
+            <label>Name: </label>
+            <input type="text" name="name" class="marg"/><br>
+            {% if error %}
+            <div class="row justify-content-center" style="margin-top: 18px; margin-bottom: 10px;">
+                <h5>{{error.message}}</h5>
+            </div>
+            {% else %}
+            <br>
+            {% endif %}
+            <label>Password: </label>
+            <input type="password" name="password" class="marg"><br><br><br>
+            <div class="row justify-content-center">
+                <input class="btn btn-success" type="submit" value="Login">
+            </div>
+        </form>
+        <br>
+        <div class="row justify-content-center">
+            <h3>
+                Haven't registered? <a href="/register" class="btn btn-success" role="button">Register Now</a>
+            </h3>
+        </div>
+    </div>
+</div>
+</body>
+</html>
